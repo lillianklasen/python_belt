@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Destination</title>
+</head>
+<body>
+
+    <h1> {{ trip.destination }}</h1>
+    <p>Planned By: {{ trip.user.name }}</p>
+    <p> Description: {{ trip.plan }}</p>
+    <p>Travel Date From: {{ trip.travel_start }} </p>
+    <p>Travel Date To: {{ trip.travel_end }} </p>
+
+    <h3>Other users' joining the trip:</h3>
+    {% for traveler in travelers %}
+    {% if current_user.id != traveler.user.id %}
+    <p>{{ traveler.user.name }}</p>
+    {% endif %}
+    {% endfor %}
+
+</body>
+</html>

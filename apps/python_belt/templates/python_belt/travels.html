@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Travel Dashboard</title>
+</head>
+<body>
+    <h1>Hello, {{ current_user.name }}</h1>
+
+    <h3>Your Trip Schedules</h3>
+
+    <table>
+        <tr>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+        </tr>
+
+        {% for trip in trips %}
+        <!-- {% if current_user.id == trip.user.id %} -->
+        <tr>
+            <td><a href="/destination/{{ trip.id }}">{{ trip.destination }}</a></td>
+            <td>{{ trip.travel_start }}</td>
+            <td>{{ trip.travel_end }}</td>
+            <td>{{ trip.plan }}</td>
+        </tr>
+        <!-- {% endif %} -->
+        {% endfor %}
+
+    </table>
+
+    <h3>Other Users Travel Plans</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Plan</th>
+            <th>Do You Want to Join?</th>
+        </tr>
+
+        {% for trip in trips %}
+        {% if current_user.id != trip.user.id %}
+        <tr>
+            <td>{{ trip.user.name }}</td>
+            <td><a href="/destination/{{ trip.id }}">{{ trip.destination }}</a></td>
+            <td>{{ trip.travel_start }}</td>
+            <td>{{ trip.travel_end }}</td>
+            <td>{{ trip.plan }}</td>
+
+            {% if user not in trip.travelers.all %}
+            <td><a href="/join/{{ trip.id }}">Join?</a></td>
+        </tr>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </table>
+
+    <br>
+    <br>
+
+
+    <a href="/add">Add Travel Plan</a>
+    <br>
+    <br>
+    <a href="/logout">Log out</a>
+
+</body>
+</html>
